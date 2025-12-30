@@ -4,6 +4,7 @@ import { useAccount, useBalance, useChainId, useConnect, useDisconnect } from 'w
 import { useEffect } from 'react';
 import { useWalletStore } from '@/store/walletStore';
 import { web3Service } from '@/services/web3';
+import { CURRENT_NETWORK } from '@/config/networks';
 
 export function useWallet() {
   const { address, isConnected, chainId } = useAccount();
@@ -18,7 +19,7 @@ export function useWallet() {
     if (isConnected && address) {
       setWalletInfo({
         address,
-        chainId: chainId || 1,
+        chainId: chainId || CURRENT_NETWORK.id,
         isConnected: true,
         balance: balanceData?.formatted,
       });
