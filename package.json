@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "NEXT_PUBLIC_NETWORK_ENV=testnet next dev",
+    "prod": "NEXT_PUBLIC_NETWORK_ENV=mainnet next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"

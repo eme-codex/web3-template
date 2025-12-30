@@ -8,11 +8,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/Button';
 import { useWallet } from '@/hooks/useWallet';
 import { useApiQuery } from '@/hooks/useApi';
+import { NETWORK_CONFIG, NETWORK_ENV } from '@/config/networks';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 
 export default function Dashboard() {
   const { isConnected, address } = useWallet();
+  const networkConfig = NETWORK_CONFIG[NETWORK_ENV];
 
   if (!isConnected) {
     return (
@@ -72,8 +74,10 @@ export default function Dashboard() {
                     <CardTitle className="text-lg">Network</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-2xl font-bold">Sepolia</p>
-                    <p className="text-sm text-muted-foreground">Testnet</p>
+                    <p className="text-2xl font-bold">{networkConfig.name}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {NETWORK_ENV === 'testnet' ? 'Testnet' : 'Mainnet'}
+                    </p>
                   </CardContent>
                 </Card>
 
