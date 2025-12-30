@@ -1,15 +1,17 @@
-import { mainnet, sepolia } from 'viem/chains';
+import { mainnet, sepolia, sei } from 'viem/chains';
 
 export const NETWORKS = {
   testnet: sepolia,
   mainnet: mainnet,
+  sei: sei,
 } as const;
 
-export const NETWORK_ENV = (process.env.NEXT_PUBLIC_NETWORK_ENV || 'testnet') as 'testnet' | 'mainnet';
+export const NETWORK_ENV = (process.env.NEXT_PUBLIC_NETWORK_ENV || 'sei') as 'testnet' | 'mainnet' | 'sei';
 
 export const RPC_URLS = {
   testnet: process.env.NEXT_PUBLIC_TESTNET_RPC_URL || 'https://sepolia.infura.io/v3/YOUR_KEY',
   mainnet: process.env.NEXT_PUBLIC_MAINNET_RPC_URL || 'https://mainnet.infura.io/v3/YOUR_KEY',
+  sei: process.env.NEXT_PUBLIC_SEI_RPC_URL || 'https://evm-rpc.sei-apis.com/',
 } as const;
 
 export const CURRENT_NETWORK = NETWORKS[NETWORK_ENV];
@@ -29,5 +31,11 @@ export const NETWORK_CONFIG = {
     chainId: 1,
     rpcUrl: RPC_URLS.mainnet,
     blockExplorer: 'https://etherscan.io',
+  },
+  sei: {
+    name: 'Sei Network',
+    chainId: 1329,
+    rpcUrl: RPC_URLS.sei,
+    blockExplorer: 'https://seitrace.com',
   },
 } as const;
