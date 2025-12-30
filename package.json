@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "NEXT_PUBLIC_NETWORK_ENV=testnet next dev",
-    "prod": "NEXT_PUBLIC_NETWORK_ENV=mainnet next dev",
-    "build": "next build",
-    "start": "next start",
+    "test": "dotenv -e .env.test -- next dev",
+    "prod": "dotenv -e .env.prod -- next dev",
+    "build:test": "dotenv -e .env.test -- next build",
+    "build:prod": "dotenv -e .env.prod -- next build",
+    "start:test": "dotenv -e .env.test -- next start",
+    "start:prod": "dotenv -e .env.prod -- next start",
     "lint": "eslint"
   },
   "dependencies": {
