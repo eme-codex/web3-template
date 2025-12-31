@@ -1,5 +1,5 @@
 import { getBalance, readContract } from 'wagmi/actions';
-import { Address, parseEther } from 'viem';
+import { Address, formatUnits, parseEther } from 'viem';
 import { CURRENT_NETWORK } from '@/config/networks';
 
 export class Web3Service {
@@ -47,7 +47,7 @@ export class Web3Service {
    * Format balance
    */
   formatBalance(balance: bigint, decimals: number = 18): string {
-    return (Number(balance) / Math.pow(10, decimals)).toFixed(4);
+    return formatUnits(balance, decimals);
   }
 
   /**
