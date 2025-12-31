@@ -8,7 +8,7 @@ import { Copy, LogOut } from 'lucide-react';
 import { copyToClipboard } from '@/utils/helpers';
 
 export function WalletInfo() {
-  const { address, isConnected, balance, shortenAddress, disconnect } = useWallet();
+  const { address, isConnected, shortenAddress, disconnect } = useWallet();
   const [copied, setCopied] = React.useState(false);
 
   const handleCopyAddress = async () => {
@@ -29,7 +29,7 @@ export function WalletInfo() {
     <Card>
       <CardHeader>
         <CardTitle>Wallet Information</CardTitle>
-        <CardDescription>Your connected wallet details</CardDescription>
+        <CardDescription>Your connected wallet address</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="space-y-2">
@@ -47,13 +47,6 @@ export function WalletInfo() {
           </div>
           {copied && <p className="text-xs text-green-600">Copied!</p>}
         </div>
-
-        {balance && (
-          <div className="space-y-2">
-            <p className="text-sm text-muted-foreground">Balance</p>
-            <p className="text-2xl font-bold">{balance.formatted} {balance.symbol}</p>
-          </div>
-        )}
 
         <Button
           variant="destructive"

@@ -2,14 +2,13 @@
 
 import React from 'react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { Button } from '@/components/ui/Button';
 
 export function WalletConnect() {
   return (
     <ConnectButton
-      accountStatus="avatar"
+      accountStatus="address"
       chainStatus="icon"
-      showBalance={true}
+      showBalance={false}
     />
   );
 }

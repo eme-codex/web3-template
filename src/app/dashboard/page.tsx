@@ -8,13 +8,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/Button';
 import { useWallet } from '@/hooks/useWallet';
 import { useApiQuery } from '@/hooks/useApi';
-import { NETWORK_CONFIG, NETWORK_ENV } from '@/config/networks';
+import { CURRENT_NETWORK, NETWORK_ENV } from '@/config/networks';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 
 export default function Dashboard() {
   const { isConnected, address } = useWallet();
-  const networkConfig = NETWORK_CONFIG[NETWORK_ENV];
+  const networkConfig = CURRENT_NETWORK;
 
   if (!isConnected) {
     return (
@@ -116,13 +116,12 @@ export default function Dashboard() {
 import { useWallet } from '@/hooks/useWallet';
 
 export function MyComponent() {
-  const { address, isConnected, balance } = useWallet();
+  const { address, isConnected } = useWallet();
   
   return (
     <div>
       <p>Address: {address}</p>
       <p>Connected: {isConnected ? 'Yes' : 'No'}</p>
-      <p>Balance: {balance?.formatted}</p>
     </div>
   );
 }`}

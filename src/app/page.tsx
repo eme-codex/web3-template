@@ -1,13 +1,9 @@
-
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
-import { WalletConnect } from '@/components/web3/WalletConnect';
-import { WalletInfo } from '@/components/web3/WalletInfo';
 import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
 
 export default function Home() {
-
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
@@ -19,7 +15,6 @@ export default function Home() {
               Web3 Next.js Template
             </h1>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <WalletConnect />
               <Link href="/dashboard">
                 <Button variant="outline">
                   View Dashboard
@@ -34,4 +29,3 @@ export default function Home() {
     </div>
   );
 }
-
