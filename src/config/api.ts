@@ -5,6 +5,9 @@ export const API_CONFIG = {
   retryDelay: 1000,
 } as const;
 
+export const RELAYER_BASE_URL =
+  process.env.NEXT_PUBLIC_RELAYER_BASE_URL || 'https://vault.echo-protocol.xyz';
+
 export const API_ENDPOINTS = {
   // Example endpoints
   health: '/health',

@@ -6,14 +6,15 @@ import { WalletInfo } from '@/components/web3/WalletInfo';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { useWallet } from '@/hooks/useWallet';
-import { useApiQuery } from '@/hooks/useApi';
+import { useWithdrawLimit } from '@/hooks/relayer/useWithdrawLimit';
 import { CURRENT_NETWORK, NETWORK_ENV } from '@/config/networks';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 
 export default function Dashboard() {
-  const { isConnected } = useWallet();
+  const { isConnected, address } = useWallet();
   const networkConfig = CURRENT_NETWORK;
+  const limitQuery = useWithdrawLimit(address);
 
   if (!isConnected) {
     return (
@@ -78,6 +79,26 @@ export default function Dashboard() {
 
               <Card>
                 <CardHeader>
+                  <CardTitle className="text-lg">Withdraw Limit</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  {limitQuery.isLoading && <p className="text-sm text-muted-foreground">Loading...</p>}
+                  {limitQuery.error && (
+                    <p className="text-sm text-red-500">Error: {limitQuery.error.message}</p>
+                  )}
+                  {!limitQuery.isLoading && !limitQuery.error && limitQuery.data && (
+                    <pre className="bg-muted p-3 rounded text-xs overflow-x-auto">
+                      {JSON.stringify(limitQuery.data, null, 2)}
+                    </pre>
+                  )}
+                  {!limitQuery.isLoading && !limitQuery.error && !limitQuery.data && (
+                    <p className="text-sm text-muted-foreground">No data</p>
+                  )}
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
                   <CardTitle className="text-lg">Status</CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -88,12 +109,6 @@ export default function Dashboard() {
                 </CardContent>
               </Card>
             </div>
-          </div>
-
-          {/* Example API Usage */}
-          <div className="mt-8">
-            <h2 className="text-2xl font-bold mb-6">API Integration Example</h2>
-            <ApiExample />
           </div>
 
           {/* Code Examples */}
@@ -128,19 +143,16 @@ export function MyComponent() {
               <CardHeader>
                 <CardTitle>API Query Example</CardTitle>
                 <CardDescription>
-                  Using TanStack Query with the custom useApiQuery hook
+                  Using TanStack Query with a custom hook
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-xs">
-                  {`// Using useApiQuery hook
-import { useApiQuery } from '@/hooks/useApi';
+                  {`// Using a custom query hook
+import { useWithdrawLimit } from '@/hooks/relayer/useWithdrawLimit';
 
-export function MyComponent() {
-  const { data, isLoading, error } = useApiQuery(
-    'health',
-    '/health'
-  );
+export function MyComponent({ address }: { address: string }) {
+  const { data, isLoading, error } = useWithdrawLimit(address);
   
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -179,36 +191,5 @@ export function MyComponent() {
         </div>
       </section>
     </Layout>
-  );
-}
-
-function ApiExample() {
-  const { data, isLoading, error } = useApiQuery(['health'], '/health');
-
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Health Check</CardTitle>
-        <CardDescription>
-          Example API call using TanStack Query
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        {isLoading && <p>Loading...</p>}
-        {error && <p className="text-red-500">Error: {error.message}</p>}
-        {data && (
-          <div className="space-y-2">
-            <p className="text-sm">
-              <span className="font-medium">Status:</span> {data.success ? 'Success' : 'Failed'}
-            </p>
-            {data.data && (
-              <pre className="bg-muted p-3 rounded text-xs overflow-x-auto">
-                {JSON.stringify(data.data, null, 2)}
-              </pre>
-            )}
-          </div>
-        )}
-      </CardContent>
-    </Card>
   );
 }
